@@ -1,0 +1,42 @@
+{"properties": [
+  {
+    "name": "DATALAKE_URI",
+    "type": "java.lang.String",
+    "description": "A description for 'DATALAKE_URI'"
+  },
+  {
+    "name": "ATHENA_S3_LOCATION",
+    "type": "java.lang.String",
+    "description": "A description for 'ATHENA_S3_LOCATION'"
+  },
+  {
+    "name": "INPUT_FEATURES",
+    "type": "java.lang.String",
+    "description": "A description for 'INPUT_FEATURES'"
+  },
+  {
+    "name": "CAR_TYPES",
+    "type": "java.lang.String",
+    "description": "A description for 'CAR_TYPES'"
+  },
+  {
+    "name": "OUTPUT_FEATURES",
+    "type": "java.lang.String",
+    "description": "A description for 'OUTPUT_FEATURES'"
+  },
+  {
+    "name": "DB_BACKEND",
+    "type": "java.lang.String",
+    "description": "A description for 'DB_BACKEND'"
+  },
+  {
+    "name": "CACHE_ALGO_INPUT_FEATURES",
+    "type": "java.lang.String",
+    "description": "A description for 'CACHE_ALGO_INPUT_FEATURES'"
+  },
+  {
+    "name": "CACHE_ALGO_OUTPUT_FEATURES",
+    "type": "java.lang.String",
+    "description": "A description for 'CACHE_ALGO_OUTPUT_FEATURES'"
+  }
+]}

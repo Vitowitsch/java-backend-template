@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+            http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>dashboard.backend</groupId>
+	<artifactId>dashboard-server</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>dashboard-backend</name>
+	<description>backend for vue.js bogie dashboard</description>
+
+	<properties>
+		<ojdbc7.version>12.1.0.1.0</ojdbc7.version>
+		<java.version>1.8</java.version>
+		<prometheus.version>0.4.0</prometheus.version>
+	</properties>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.2.RELEASE</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.facebook.presto</groupId>
+			<artifactId>presto-jdbc</artifactId>
+			<version>0.152</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>24.0-jre</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.6.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.6.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.javafaker</groupId>
+			<artifactId>javafaker</artifactId>
+			<version>0.14</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
+		
+		<dependency>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>athena</artifactId>
+			<version>2.10.23</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>DashboardServer</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<enableAssertions>false</enableAssertions>
+				</configuration>
+			</plugin>
+
+			<!-- executes test with java agent options of the JVM -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argline>-javaagent:${project.build.directory}/jamm.jar</argline>
+				</configuration>
+			</plugin>
+
+		
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.8.2</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+	</build>
+
+</project>
