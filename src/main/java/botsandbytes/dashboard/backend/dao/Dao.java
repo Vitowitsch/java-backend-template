@@ -1,5 +1,6 @@
 package botsandbytes.dashboard.backend.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import botsandbytes.dashboard.backend.builder.SqlQueryBuilder;
@@ -7,23 +8,27 @@ import botsandbytes.dashboard.backend.request.ColumnVO;
 import botsandbytes.dashboard.backend.request.GetRowsRequest;
 import botsandbytes.dashboard.backend.response.GetRowsResponse;
 
+import static botsandbytes.dashboard.backend.builder.ResponseBuilder.createResponse;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static botsandbytes.dashboard.backend.builder.ResponseBuilder.createResponse;
 import static java.lang.String.format;
 import static java.util.stream.Collectors.toMap;
 
 public class Dao {
 
-	protected JdbcTemplate template;
+	@Autowired
+	protected JdbcTemplate jdbcTemplate;
+
 	protected SqlQueryBuilder queryBuilder;
 	protected String table;
 
-	public Dao(JdbcTemplate template, String table) {
-		this.template = template;
-		
+	public Dao() {
+	}
+
+	public Dao(String table) {
 		queryBuilder = new SqlQueryBuilder();
 		this.table = table;
 	}
@@ -31,7 +36,7 @@ public class Dao {
 	public GetRowsResponse getData(GetRowsRequest request) {
 		Map<String, List<String>> pivotValues = getPivotValues(request.getPivotCols());
 		String sql = queryBuilder.createSql(request, table, pivotValues);
-		List<Map<String, Object>> rows = template.queryForList(sql);
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
 		return createResponse(request, rows, pivotValues);
 	}
 
@@ -42,7 +47,7 @@ public class Dao {
 
 	protected List<String> getPivotValues(String pivotColumn) {
 		String sql = "SELECT DISTINCT %s FROM " + table;
-		return template.queryForList(format(sql, pivotColumn), String.class);
+		return jdbcTemplate.queryForList(format(sql, pivotColumn), String.class);
 	}
 
 }

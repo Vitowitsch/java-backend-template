@@ -14,19 +14,24 @@ import botsandbytes.dashboard.backend.response.Row;
 public class CSRMDao extends Dao {
 
 	@Autowired
-	public CSRMDao(JdbcTemplate template) {
-		super(template, "overview");
+	public CSRMDao() {
+		super("overview");
 	}
 
 	public List<Row> getAll() {
 		List<Row> r = new LinkedList<Row>();
-		String sql = "select origin, objectid, diagid, lastResult_HS, lastResult_RUL, carnumber, bogie, axis, comp, level_0, level_1, level_2, level_3 from overview order by objectid, origin, carnumber;";
-		SqlRowSet rows = template.queryForRowSet(sql);
+		String sql = "select origin, objectid, diagid, lastResult_HS, lastResult_RUL, carnumber, boogie_woogie, axis, comp, lastExecTime, lastResultTime from overview order by objectid, origin, carnumber;";
+		SqlRowSet rows = jdbcTemplate.queryForRowSet(sql);
+		String train;
 		while (rows.next()) {
-			r.add(new Row(rows.getString("origin"), rows.getString("objectid"), rows.getString("diagid"),
-					Integer.parseInt(rows.getString("lastResult_HS")), rows.getString("lastResult_RUL"), rows.getString("carnumber"),
-					rows.getString("bogie"), rows.getString("axis"), rows.getString("comp"), rows.getInt("level_0"),
-					rows.getInt("level_1"), rows.getInt("level_2"), rows.getInt("level_3")));
+			train = rows.getString("objectid");
+			Integer lastResult_HS = Integer.parseInt(rows.getString("lastResult_HS"));
+			// TODO: according to the engineeers these shall not be delivered to frontend
+			if (0 != lastResult_HS) {
+				r.add(new Row(rows.getString("origin"), train, rows.getString("diagid"), lastResult_HS,
+						rows.getString("carnumber"), rows.getString("boogie_woogie"), rows.getString("axis"),
+						rows.getString("comp"), rows.getString("lastResultTime"), rows.getString("lastExecTime")));
+			}
 		}
 		return r;
 	}

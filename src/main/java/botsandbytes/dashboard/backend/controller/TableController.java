@@ -1,6 +1,7 @@
 package botsandbytes.dashboard.backend.controller;
 
 import org.apache.logging.log4j.LogManager;
+
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,17 +14,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import botsandbytes.dashboard.backend.Config;
+import botsandbytes.dashboard.backend.dao.*;
 import botsandbytes.dashboard.backend.DataLakeAccess;
 import botsandbytes.dashboard.backend.DataLakeCache;
-import botsandbytes.dashboard.backend.MySQLCache;
+import botsandbytes.dashboard.backend.SnapshotDataCache;
 import botsandbytes.dashboard.backend.dao.CarDao;
 import botsandbytes.dashboard.backend.dao.OverviewTableDao;
 import botsandbytes.dashboard.backend.request.GetRowsRequest;
 import botsandbytes.dashboard.backend.request.GetSigalRequest;
+import botsandbytes.dashboard.backend.response.DashboardData;
 import botsandbytes.dashboard.backend.response.GetRowsResponse;
 import botsandbytes.dashboard.backend.response.InputFeature;
 import botsandbytes.dashboard.backend.response.OutputFeature;
 import botsandbytes.dashboard.backend.response.Row;
+import botsandbytes.dashboard.backend.storage.Expectancy;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -46,7 +50,10 @@ public class TableController {
 	DataLakeCache dataLakeCache;
 
 	@Autowired
-	MySQLCache mySqlCache;
+	Expectancy expectancy;
+
+	@Autowired
+	SnapshotDataCache mySqlCache;
 
 	DataLakeAccess dataLake;
 
@@ -81,6 +88,20 @@ public class TableController {
 		return mySqlCache.getRows();
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/movements")
+	@ResponseBody
+	@CrossOrigin
+	public Map<String, Integer> getMovements() {
+		return dataLakeCache.getMovements();
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/expectancy")
+	@ResponseBody
+	@CrossOrigin
+	public String getExpectancy() {
+		return expectancy.get(config.isS3Mocked());
+	}
+
 	@RequestMapping(value = "/history")
 	@ResponseBody
 	@CrossOrigin
@@ -101,11 +122,18 @@ public class TableController {
 		return result;
 	}
 
+	@RequestMapping(value = "/dashboard")
+	@ResponseBody
+	@CrossOrigin
+	public List<DashboardData> getDashboardData() throws InterruptedException, SQLException {
+		logger.info("get dashboard data");
+		return dataLakeCache.getDashboardData();
+	}
+
 	@RequestMapping(method = POST, value = "/signals")
 	@ResponseBody
 	@CrossOrigin
-	public List<InputFeature> getInputFeatureHistory(@RequestBody GetSigalRequest req)
-			throws InterruptedException, SQLException {
+	public List<InputFeature> getInputFeatureHistory(@RequestBody GetSigalRequest req) throws Exception {
 		final String train = req.getTrain();
 		final String car = req.getCar();
 		String carUIC = carDao.getCarNo(train, car);

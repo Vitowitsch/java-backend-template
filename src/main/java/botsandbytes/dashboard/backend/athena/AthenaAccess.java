@@ -1,16 +1,18 @@
-package botsandbytes.dashboard.athena;
+package botsandbytes.dashboard.backend.athena;
 
 import software.amazon.awssdk.services.athena.model.GetQueryResultsResponse;
 import software.amazon.awssdk.services.athena.model.Row;
 import software.amazon.awssdk.services.athena.paginators.GetQueryResultsIterable;
 
-import org.springframework.stereotype.Component;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import botsandbytes.dashboard.backend.DataLakeAccess;
+import botsandbytes.dashboard.backend.model.DrivenCount;
+import botsandbytes.dashboard.backend.response.DashboardData;
 import botsandbytes.dashboard.backend.response.InputFeature;
 import botsandbytes.dashboard.backend.response.OutputFeature;
 
-import static java.util.stream.Collectors.joining;
 
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -19,19 +21,12 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Component
 public class AthenaAccess extends AthenaBase implements DataLakeAccess {
+
+	private Logger logger = LogManager.getLogger(this.getClass());
 
 	public AthenaAccess(String outputLocation) {
 		super(outputLocation);
-	}
-
-	@Override
-	public List<OutputFeature> getOutputFeatures(String train, String comp, String algo)
-			throws InterruptedException, SQLException {
-		final String sql = SELECT_OUTPUT_FEATURES + "where componentid='" + comp + "' and origin='" + algo
-				+ "' and objectid='" + train + "' order by time desc limit 200";
-		return runQuery(sql, outputFeatureFromRow());
 	}
 
 	@Override
@@ -42,7 +37,17 @@ public class AthenaAccess extends AthenaBase implements DataLakeAccess {
 					row.data().get(2).varCharValue(), row.data().get(3).varCharValue(),
 					row.data().get(4).varCharValue(), row.data().get(5).varCharValue());
 		};
+	}
 
+	@Override
+	public Function<Object, DashboardData> dashboardDataFromRow() {
+		return (Object o) -> {
+			Row row = (Row) o;
+			DashboardData d = null;
+			return new DashboardData(row.data().get(0).varCharValue(), row.data().get(1).varCharValue(),
+					row.data().get(2).varCharValue(), row.data().get(3).varCharValue(),
+					row.data().get(4).varCharValue());
+		};
 	}
 
 	@Override
@@ -56,17 +61,24 @@ public class AthenaAccess extends AthenaBase implements DataLakeAccess {
 	}
 
 	@Override
-	public List<InputFeature> getInputFeatures(String carNo, List<String> signals)
-			throws InterruptedException, SQLException {
-		String sigs = signals.stream().collect(joining("','"));
-		final String sql = SELECT_INPUT_FEATURES + " where car='" + carNo + "' and var in ('" + sigs + "') and ts>'"
-				+ from() + "'";
-		return runQuery(sql, inputFeatureFromRow());
+	public Function<Object, DrivenCount> drivenCountFromRow(int threshold) {
+		return (Object o) -> {
+			Row row = (Row) o;
+			int mileage = -1;
+			try {
+				mileage = Integer.parseInt(row.data().get(4).varCharValue());
+			} catch (Exception e) {
+				// its okay, the first line in an athena query contains the table header.
+			}
+			return new DrivenCount(row.data().get(0).varCharValue().replaceFirst(TRAIN_PREFIX, ""),
+					row.data().get(1).varCharValue(), mileage, threshold);
+		};
 	}
 
 	@Override
 	public <T> List<T> runQuery(final String sql, Function<Object, T> objCreat)
 			throws SQLException, InterruptedException {
+		logger.info("running query: " + sql);
 		GetQueryResultsIterable paginatedQueryResults = queryAthena(sql);
 		List<T> result = new LinkedList<>();
 		for (GetQueryResultsResponse queryResults : paginatedQueryResults) {
@@ -77,4 +89,5 @@ public class AthenaAccess extends AthenaBase implements DataLakeAccess {
 		result.remove(0); // contains table header
 		return result;
 	}
+
 }

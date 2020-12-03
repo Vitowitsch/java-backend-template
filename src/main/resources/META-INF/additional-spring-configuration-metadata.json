@@ -38,5 +38,20 @@
     "name": "CACHE_ALGO_OUTPUT_FEATURES",
     "type": "java.lang.String",
     "description": "A description for 'CACHE_ALGO_OUTPUT_FEATURES'"
+  },
+  {
+    "name": "MILEAGE_THRESHOLD",
+    "type": "java.lang.String",
+    "description": "A description for 'MILEAGE_THRESHOLD'"
+  },
+  {
+    "name": "MOCK_S3",
+    "type": "java.lang.String",
+    "description": "A description for 'MOCK_S3'"
+  },
+  {
+    "name": "EXPECTANCY_S3_BUCKET",
+    "type": "java.lang.String",
+    "description": "A description for 'EXPECTANCY_S3_BUCKET'"
   }
 ]}

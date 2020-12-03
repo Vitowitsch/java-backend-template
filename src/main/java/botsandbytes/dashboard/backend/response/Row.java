@@ -6,15 +6,12 @@ public class Row {
 	private String objectid;
 	private String diagid;
 	private Integer lastResult_HS;
-	private String lastResult_RUL;
 	private String carnumber;
-	private String bogie;
+	private String boogieWoogie;
 	private String axis;
 	private String comp;
-	private int level_0;
-	private int level_1;
-	private int level_2;
-	private int level_3;
+	private String lastResultTime;
+	private String lastExecTime;
 
 	public String getOrigin() {
 		return origin;
@@ -30,6 +27,22 @@ public class Row {
 
 	public void setObjectid(String objectid) {
 		this.objectid = objectid;
+	}
+
+	public void setLastResultTime(String lastResultTime) {
+		this.lastResultTime = lastResultTime;
+	}
+
+	public void setLastExecTime(String lastExecTime) {
+		this.lastExecTime = lastExecTime;
+	}
+
+	public String getLastResultTime() {
+		return lastResultTime;
+	}
+
+	public String getLastExecTime() {
+		return lastExecTime;
 	}
 
 	public String getDiagid() {
@@ -48,14 +61,6 @@ public class Row {
 		this.lastResult_HS = lastResult_HS;
 	}
 
-	public String getLastResult_RUL() {
-		return lastResult_RUL;
-	}
-
-	public void setLastResult_RUL(String lastResult_RUL) {
-		this.lastResult_RUL = lastResult_RUL;
-	}
-
 	public String getCarnumber() {
 		return carnumber;
 	}
@@ -64,12 +69,12 @@ public class Row {
 		this.carnumber = carnumber;
 	}
 
-	public String getBogie() {
-		return bogie;
+	public String getBoogieWoogie() {
+		return boogieWoogie;
 	}
 
-	public void setBogie(String bogie) {
-		this.bogie = bogie;
+	public void setBoogieWoogie(String boogieWoogie) {
+		this.boogieWoogie = boogieWoogie;
 	}
 
 	public String getAxis() {
@@ -80,6 +85,10 @@ public class Row {
 		this.axis = axis;
 	}
 
+	public void setLastResult_HS(Integer lastResult_HS) {
+		this.lastResult_HS = lastResult_HS;
+	}
+
 	public String getComp() {
 		return comp;
 	}
@@ -88,54 +97,17 @@ public class Row {
 		this.comp = comp;
 	}
 
-	public int getLevel_0() {
-		return level_0;
-	}
-
-	public void setLevel_0(int level_0) {
-		this.level_0 = level_0;
-	}
-
-	public int getLevel_1() {
-		return level_1;
-	}
-
-	public void setLevel_1(int level_1) {
-		this.level_1 = level_1;
-	}
-
-	public int getLevel_2() {
-		return level_2;
-	}
-
-	public void setLevel_2(int level_2) {
-		this.level_2 = level_2;
-	}
-
-	public int getLevel_3() {
-		return level_3;
-	}
-
-	public void setLevel_3(int level_3) {
-		this.level_3 = level_3;
-	}
-
-	public Row(String origin, String objectid, String diagid, int lastResult_HS, String lastResult_RUL, String carnumber,
-			String bogie, String axis, String comp, int level_0, int level_1, int level_2, int level_3) {
-		super();
+	public Row(String origin, String objectid, String diagid, int lastResult_HS, String carnumber, String boogieWoogie,
+			String axis, String comp, String lastResultTime, String lastExecTime) {
 		this.origin = origin;
 		this.objectid = objectid;
 		this.diagid = diagid;
 		this.lastResult_HS = lastResult_HS;
-		this.lastResult_RUL = lastResult_RUL;
 		this.carnumber = carnumber;
-		this.bogie = bogie;
+		this.boogieWoogie = boogieWoogie;
 		this.axis = axis;
 		this.comp = comp;
-		this.level_0 = level_0;
-		this.level_1 = level_1;
-		this.level_2 = level_2;
-		this.level_3 = level_3;
+		this.lastResultTime = lastResultTime;
+		this.lastExecTime = lastExecTime;
 	}
-
 }

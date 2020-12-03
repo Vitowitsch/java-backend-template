@@ -10,7 +10,7 @@ import botsandbytes.dashboard.backend.dao.CSRMDao;
 import botsandbytes.dashboard.backend.response.Row;
 
 @Service
-public class MySQLCache {
+public class SnapshotDataCache {
 
 	@Autowired
 	Config config;

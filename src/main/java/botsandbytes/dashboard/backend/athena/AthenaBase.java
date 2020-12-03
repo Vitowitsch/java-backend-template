@@ -1,4 +1,4 @@
-package botsandbytes.dashboard.athena;
+package botsandbytes.dashboard.backend.athena;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -108,7 +108,7 @@ public class AthenaBase {
 	 */
 	private String submitAthenaQuery(AthenaClient athenaClient, String statement) {
 
-		QueryExecutionContext queryExecutionContext = QueryExecutionContext.builder().database("bogie_diagnostic")
+		QueryExecutionContext queryExecutionContext = QueryExecutionContext.builder().database("db")
 				.build();
 		logger.info("ATHENA_OUTPUT:" + outputLocation);
 		ResultConfiguration resultConfiguration = ResultConfiguration.builder().outputLocation(this.outputLocation)

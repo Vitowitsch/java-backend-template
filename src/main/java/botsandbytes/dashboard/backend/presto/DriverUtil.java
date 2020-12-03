@@ -1,4 +1,4 @@
-package botsandbytes.dashboard.presto;
+package botsandbytes.dashboard.backend.presto;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,7 +40,7 @@ public class DriverUtil {
 
 	public Connection getPresto() {
 		try {
-			return getConnection("jdbc:presto://***", "***",
+			return getConnection("jdbc:presto://localhost:150/metastore", "***",
 					"");
 		} catch (Exception e) {
 			logger.error("could not get presto con: " + e.getMessage(), e);

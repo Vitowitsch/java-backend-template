@@ -1,4 +1,4 @@
-package botsandbytes.dashboard.athena;
+package botsandbytes.dashboard.backend.athena;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
