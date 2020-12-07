@@ -5,13 +5,13 @@
             http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>botsandbytes.dashboard.backend</groupId>
-	<artifactId>dashboard-server</artifactId>
+	<groupId>botsandbytes.java.backend.template</groupId>
+	<artifactId>java-template</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>dashboard-backend</name>
-	<description>backend for vue.js bogie dashboard</description>
+	<name>botsandbytes.java.backend.template</name>
+	<description>botsandbytes.java.backend.template</description>
 
 	<properties>
 		<ojdbc7.version>12.1.0.1.0</ojdbc7.version>

@@ -4,7 +4,8 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-import botsandbytes.dashboard.backend.Config;
+import botsandbytes.java.backend.template.Config;
+import botsandbytes.java.backend.template.storage.Expectancy;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

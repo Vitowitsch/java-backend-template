@@ -1,4 +1,4 @@
-### Dashboard Backend
+### A Java-Webapp-Template
 
 ##### Tech-Stack
 - Java
@@ -32,8 +32,8 @@
 
 ##### Docker
 ~~~
-docker build -t dashboard-server .
-docker run --rm -it -p 9090:9090 dashboard-server
+docker build -t java-template .
+docker run --rm -it -p 9090:9090 java-template
 ~~~
 
 ##### Test
