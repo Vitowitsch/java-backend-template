@@ -1,4 +1,4 @@
-### Dashboard Backend
+### A Java-Template
 
 ##### Tech-Stack
 - Java
