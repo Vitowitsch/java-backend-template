@@ -13,9 +13,6 @@
 ##### Configuration
 - src/main/resources/application.properties
 
-##### Local test-deployment
-- network policy prevents to tunnel a locally running application to AWS-Athena. But we replace the AWS connection by a presto-connection using a tunnel:
-
 ###### Environment Variables
 - EXPECTANCY_S3_BUCKET:
 - EXPECTANCY_S3_KEY:
@@ -26,7 +23,7 @@
 - MILEAGE_THRESHOLD: 300
 - spring.datasource.driver-class-name: org.mariadb.jdbc.Driver
 - spring.datasource.password:
-- spring.datasource.url: jdbc:mariadb://127.0.0.1:147/db
+- spring.datasource.url: jdbc:mariadb://127.0.0.1:147/xy
 - spring.datasource.username: root
 - spring.jpa.database-platform: spring.jpa.database-platform: org.hibernate.dialect.MySQL5Dialect
 

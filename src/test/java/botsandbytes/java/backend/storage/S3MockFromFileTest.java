@@ -1,4 +1,4 @@
-package botsandbytes.dashboard.backend.storage;
+package botsandbytes.java.backend.storage;
 
 import java.io.IOException;
 
