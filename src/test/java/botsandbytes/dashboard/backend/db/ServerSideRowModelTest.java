@@ -39,7 +39,7 @@ public class ServerSideRowModelTest {
 		request.setStartRow(100);
 		request.setEndRow(200);
 		request.setRowGroupCols(asList(new ColumnVO("objectid", "objectid", "objectid", "")));
-		request.setValueCols(asList(new ColumnVO("GOLD", "Gold", "GOLD", "sum")));
+		request.setValueCols(asList(new ColumnVO("key", "key", "key", "sum")));
 		request.setGroupKeys(singletonList("object_key"));
 
 		String sql = new SqlQueryBuilder().createSql(request, "overview", emptyMap());

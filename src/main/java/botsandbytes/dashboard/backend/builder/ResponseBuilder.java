@@ -17,37 +17,28 @@ import static java.util.stream.Collectors.*;
 
 public class ResponseBuilder {
 
-    public static GetRowsResponse createResponse(
-            GetRowsRequest request,
-            List<Map<String, Object>> rows,
-            Map<String, List<String>> pivotValues) {
+	public static GetRowsResponse createResponse(GetRowsRequest request, List<Map<String, Object>> rows,
+			Map<String, List<String>> pivotValues) {
 
-        int currentLastRow = request.getStartRow() + rows.size();
-        int lastRow = currentLastRow <= request.getEndRow() ? currentLastRow : -1;
+		int currentLastRow = request.getStartRow() + rows.size();
+		int lastRow = currentLastRow <= request.getEndRow() ? currentLastRow : -1;
 
-        List<ColumnVO> valueColumns = request.getValueCols();
+		List<ColumnVO> valueColumns = request.getValueCols();
 
-        return new GetRowsResponse(rows, lastRow, getSecondaryColumns(pivotValues, valueColumns));
-    }
+		return new GetRowsResponse(rows, lastRow, getSecondaryColumns(pivotValues, valueColumns));
+	}
 
-    private static List<String> getSecondaryColumns(Map<String, List<String>> pivotValues, List<ColumnVO> valueColumns) {
+	private static List<String> getSecondaryColumns(Map<String, List<String>> pivotValues,
+			List<ColumnVO> valueColumns) {
 
-        List<Set<Pair<String, String>>> pivotPairs = pivotValues.entrySet().stream()
-                .map(e -> e.getValue().stream()
-                        .map(pivotValue -> Pair.of(e.getKey(), pivotValue))
-                        .collect(toCollection(LinkedHashSet::new)))
-                .collect(toList());
+		List<Set<Pair<String, String>>> pivotPairs = pivotValues.entrySet().stream().map(e -> e.getValue().stream()
+				.map(pivotValue -> Pair.of(e.getKey(), pivotValue)).collect(toCollection(LinkedHashSet::new)))
+				.collect(toList());
 
-        return Sets.cartesianProduct(pivotPairs)
-                .stream()
-                .flatMap(pairs -> {
-                    String pivotCol = pairs.stream()
-                            .map(Pair::getRight)
-                            .collect(joining("_"));
+		return Sets.cartesianProduct(pivotPairs).stream().flatMap(pairs -> {
+			String pivotCol = pairs.stream().map(Pair::getRight).collect(joining("_"));
 
-                    return valueColumns.stream()
-                            .map(valueCol -> pivotCol + "_" + valueCol.getField());
-                })
-                .collect(toList());
-    }
+			return valueColumns.stream().map(valueCol -> pivotCol + "_" + valueCol.getField());
+		}).collect(toList());
+	}
 }

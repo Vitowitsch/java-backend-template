@@ -5,32 +5,32 @@ import java.nio.file.Paths;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import botsandbytes.dashboard.backend.Config;
-
-@Service
 public class Expectancy {
 
-	@Autowired
-	Config config;
+	Logger logger = LogManager.getLogger(this.getClass());
 
-	private Logger logger = LogManager.getLogger(this.getClass());
+	private S3Access acc;
+	private String bucket;
+	private String key;
 
-	public String get(Boolean mocked) {
-		byte[] bytes;
-		if (mocked) {
+	public Expectancy(Boolean mockingMode, String bucket, String key) {
+		this.bucket = bucket;
+		this.key = key;
+		if (mockingMode) {
 			String testDataDir = Paths.get(".").toAbsolutePath().normalize().toString() + "/src/test/resources";
-			LocalFsAccess a = new LocalFsAccess(false, testDataDir);
-			bytes = a.get("bucket", "expected_outcome.json");
-			a.stop();
-
+			this.acc = new LocalFsAccess(false, testDataDir);
 		} else {
-			String fileLocation = config.getEXPECTANCY_S3_BUCKET() + config.getEXPECTANCY_S3_KEY();
-			logger.info("downloading " + fileLocation);
-			bytes = new S3Access().get(config.getEXPECTANCY_S3_BUCKET(), config.getEXPECTANCY_S3_KEY());
+			this.acc = new S3Access();
 		}
+	}
+
+	public String get() {
+		byte[] bytes = acc.get(this.bucket, this.key);
 		return new String(bytes, StandardCharsets.UTF_8);
+	}
+
+	public void stop() {
+		acc.stop();
 	}
 }

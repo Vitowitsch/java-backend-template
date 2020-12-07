@@ -20,16 +20,15 @@ public class CSRMDao extends Dao {
 
 	public List<Row> getAll() {
 		List<Row> r = new LinkedList<Row>();
-		String sql = "select origin, objectid, diagid, lastResult_HS, lastResult_RUL, carnumber, boogie_woogie, axis, comp, lastExecTime, lastResultTime from overview order by objectid, origin, carnumber;";
+		String sql = "${REPLACE}";
 		SqlRowSet rows = jdbcTemplate.queryForRowSet(sql);
 		String train;
 		while (rows.next()) {
 			train = rows.getString("objectid");
-			Integer lastResult_HS = Integer.parseInt(rows.getString("lastResult_HS"));
-			// TODO: according to the engineeers these shall not be delivered to frontend
-			if (0 != lastResult_HS) {
-				r.add(new Row(rows.getString("origin"), train, rows.getString("diagid"), lastResult_HS,
-						rows.getString("carnumber"), rows.getString("boogie_woogie"), rows.getString("axis"),
+			Integer state = Integer.parseInt(rows.getString("state"));
+			if (0 != state) {
+				r.add(new Row(rows.getString("origin"), train, rows.getString("fieldid"), state,
+						rows.getString("target"), rows.getString("rootpos"), rows.getString("position"),
 						rows.getString("comp"), rows.getString("lastResultTime"), rows.getString("lastExecTime")));
 			}
 		}

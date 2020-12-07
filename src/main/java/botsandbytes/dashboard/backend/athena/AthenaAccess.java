@@ -10,9 +10,7 @@ import org.apache.logging.log4j.Logger;
 import botsandbytes.dashboard.backend.DataLakeAccess;
 import botsandbytes.dashboard.backend.model.DrivenCount;
 import botsandbytes.dashboard.backend.response.DashboardData;
-import botsandbytes.dashboard.backend.response.InputFeature;
 import botsandbytes.dashboard.backend.response.OutputFeature;
-
 
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -51,16 +49,6 @@ public class AthenaAccess extends AthenaBase implements DataLakeAccess {
 	}
 
 	@Override
-	public Function<Object, InputFeature> inputFeatureFromRow() {
-		return (Object o) -> {
-			Row row = (Row) o;
-			return new InputFeature(row.data().get(0).varCharValue(), row.data().get(1).varCharValue(),
-					row.data().get(2).varCharValue(), row.data().get(3).varCharValue(),
-					row.data().get(4).varCharValue(), row.data().get(5).varCharValue());
-		};
-	}
-
-	@Override
 	public Function<Object, DrivenCount> drivenCountFromRow(int threshold) {
 		return (Object o) -> {
 			Row row = (Row) o;
@@ -70,7 +58,7 @@ public class AthenaAccess extends AthenaBase implements DataLakeAccess {
 			} catch (Exception e) {
 				// its okay, the first line in an athena query contains the table header.
 			}
-			return new DrivenCount(row.data().get(0).varCharValue().replaceFirst(TRAIN_PREFIX, ""),
+			return new DrivenCount(row.data().get(0).varCharValue().replaceFirst(OBJECT_PREFIX, ""),
 					row.data().get(1).varCharValue(), mileage, threshold);
 		};
 	}

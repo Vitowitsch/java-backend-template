@@ -4,16 +4,16 @@ import java.util.function.Supplier;
 
 public class OutputFeature {
 
-	private String train;
+	private String object;
 	private String component;
 	private String algo;
 	private String value;
 	private String valueName;
 	private String timeStamp;
 
-	public OutputFeature(String train, String component, String algo, String valueName, String value,
+	public OutputFeature(String object, String component, String algo, String valueName, String value,
 			String timeStamp) {
-		this.train = train;
+		this.object = object;
 		this.component = component;
 		this.algo = algo;
 		this.value = value;
@@ -22,7 +22,7 @@ public class OutputFeature {
 	}
 
 	public Supplier<String> getKey() {
-		return () -> this.train + this.component + this.algo;
+		return () -> this.object + this.component + this.algo;
 	};
 
 	public String getValue() {
@@ -49,12 +49,12 @@ public class OutputFeature {
 		this.timeStamp = timeStamp;
 	}
 
-	public String getTrain() {
-		return train;
+	public String getObject() {
+		return object;
 	}
 
-	public void setTrain(String train) {
-		this.train = train;
+	public void setObject(String o) {
+		this.object = o;
 	}
 
 	public String getComponent() {
@@ -71,12 +71,6 @@ public class OutputFeature {
 
 	public void setAlgo(String algo) {
 		this.algo = algo;
-	}
-
-	@Override
-	public String toString() {
-		return "State [train=" + train + ", component=" + component + ", algo=" + algo + ", value=" + value
-				+ ", valueName=" + valueName + ", timeStamp=" + timeStamp + "]";
 	}
 
 }

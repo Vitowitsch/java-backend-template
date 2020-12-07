@@ -61,7 +61,7 @@ public class S3Access {
 	}
 
 	public void stop() {
-		// used for the monkey patched mock stub
+		// mock stub needs that method
 	}
 
 }

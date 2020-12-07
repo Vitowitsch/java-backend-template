@@ -5,7 +5,7 @@ public class DashboardData {
 	private String objectid;
 	private String origin;
 	private String time;
-	private String car;
+	private String target;
 	private Integer value;
 
 	private boolean moved = false;
@@ -14,7 +14,7 @@ public class DashboardData {
 		this.objectid = objectid;
 		this.origin = origin;
 		this.time = time;
-		this.car = component.split("\\.")[0];
+		this.target = component.split("\\.")[0];
 		try {
 			this.value = Integer.parseInt(val);
 		} catch (Exception e) {
@@ -34,12 +34,12 @@ public class DashboardData {
 		return objectid;
 	}
 
-	public String getCar() {
-		return car;
+	public String getTarget() {
+		return target;
 	}
 
-	public void setCar(String car) {
-		this.car = car;
+	public void setTarget(String target) {
+		this.target = target;
 	}
 
 	public void setObjectid(String objectid) {

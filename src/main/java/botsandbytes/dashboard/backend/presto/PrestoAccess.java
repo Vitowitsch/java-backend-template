@@ -16,7 +16,6 @@ import botsandbytes.dashboard.backend.athena.StreamHelper;
 import botsandbytes.dashboard.backend.athena.StreamHelper.Record;
 import botsandbytes.dashboard.backend.model.DrivenCount;
 import botsandbytes.dashboard.backend.response.DashboardData;
-import botsandbytes.dashboard.backend.response.InputFeature;
 import botsandbytes.dashboard.backend.response.OutputFeature;
 
 public class PrestoAccess implements DataLakeAccess {
@@ -42,19 +41,10 @@ public class PrestoAccess implements DataLakeAccess {
 	}
 
 	@Override
-	public Function<Object, InputFeature> inputFeatureFromRow() {
-		return (Object o) -> {
-			Record r = (Record) o;
-			return new InputFeature(r.getString("car"), r.getString("var"), r.getString("val"), r.getString("ts"),
-					r.getString("configversion"), r.getString("softwareversion"));
-		};
-	}
-
-	@Override
 	public Function<Object, DrivenCount> drivenCountFromRow(int threshold) {
 		return (Object o) -> {
 			Record r = (Record) o;
-			return new DrivenCount(r.getString("objectid").replaceFirst(TRAIN_PREFIX, ""), r.getString("event_date"),
+			return new DrivenCount(r.getString("objectid").replaceFirst(OBJECT_PREFIX, ""), r.getString("event_date"),
 					Integer.parseInt(r.getString("km_diff")), threshold);
 		};
 	}

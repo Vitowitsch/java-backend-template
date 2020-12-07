@@ -15,8 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.S3Object;
 
-import botsandbytes.dashboard.backend.storage.LocalFsAccess;
-
 public class S3MockInMemTest {
 
 	LocalFsAccess s3Mock;

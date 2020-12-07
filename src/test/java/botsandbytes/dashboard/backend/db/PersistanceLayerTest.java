@@ -35,8 +35,8 @@ public class PersistanceLayerTest {
 	private List<Row> createData() {
 		List<Row> rows = new ArrayList<>();
 		IntStream.range(0, 10).forEach(index -> {
-			Row r = new Row("origin", "objectid", "diagid", 3, "carnumber", "bogie", "axis", "comp", "lastResultTime",
-					"lastExecTime");
+			Row r = new Row("origin", "objectid", "fieldid", 3, "target", "rootPos", "position", "comp",
+					"lastResultTime", "lastExecTime");
 			rows.add(r);
 
 		});
@@ -44,7 +44,7 @@ public class PersistanceLayerTest {
 	}
 
 	private void insertBatch(final List<Row> rows) {
-		String sql = "INSERT INTO overview (origin, objectid, diagid, lastResult_HS, carnumber, bogie, axis, comp, lastResultTime, lastExecTime) "
+		String sql = "INSERT INTO overview (origin, objectid, fieldid, state, target, rootpos, position, comp, lastResultTime, lastExecTime) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		template.batchUpdate(sql, new BatchPreparedStatementSetter() {
@@ -54,11 +54,11 @@ public class PersistanceLayerTest {
 
 				ps.setString(1, r.getOrigin());
 				ps.setString(2, r.getObjectid());
-				ps.setString(3, r.getDiagid());
-				ps.setLong(4, r.getLastResult_HS());
-				ps.setString(5, r.getCarnumber());
-				ps.setString(6, r.getBoogieWoogie());
-				ps.setString(7, r.getAxis());
+				ps.setString(3, r.getFieldId());
+				ps.setLong(4, r.getState());
+				ps.setString(5, r.getTarget());
+				ps.setString(6, r.getRootPos());
+				ps.setString(7, r.getPosition());
 				ps.setString(8, r.getComp());
 				ps.setString(9, r.getLastResultTime());
 				ps.setString(10, r.getLastExecTime());

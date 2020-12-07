@@ -1,5 +1,8 @@
 package botsandbytes.dashboard.backend.storage;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.Protocol;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -14,18 +17,25 @@ public class LocalFsAccess extends S3Access {
 
 	private S3Mock api;
 
+	private int PORT = 8001;
+
+	private String uri;
+
+	private Logger logger = LogManager.getLogger(this.getClass());
+
 	public LocalFsAccess(boolean inMem, String s3MockFolder) {
+		this.uri = String.format("http://localhost:%d", this.PORT);
 		if (inMem) {
-			api = new S3Mock.Builder().withPort(8001).withInMemoryBackend().build();
+			api = new S3Mock.Builder().withPort(PORT).withInMemoryBackend().build();
 		} else {
-			api = new S3Mock.Builder().withPort(8001).withFileBackend(s3MockFolder).build();
+			api = new S3Mock.Builder().withPort(PORT).withFileBackend(s3MockFolder).build();
 		}
 		api.start();
-
 	}
 
 	public AmazonS3 getClient() {
-		EndpointConfiguration endpoint = new EndpointConfiguration("http://localhost:8001", "eu-central-1");
+		logger.info("starting mock-s3 if");
+		EndpointConfiguration endpoint = new EndpointConfiguration(this.uri, "eu-central-1");
 		ClientConfiguration clientCfg = new ClientConfiguration();
 		clientCfg.setProtocol(Protocol.HTTP);
 		clientCfg.setNonProxyHosts("localhost");
@@ -36,6 +46,7 @@ public class LocalFsAccess extends S3Access {
 
 	@Override
 	public void stop() {
+		logger.info("terminating mock-s3 if");
 		api.stop();
 		api.shutdown();
 	}

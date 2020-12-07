@@ -3,13 +3,13 @@ package botsandbytes.dashboard.backend.model;
 /*holds the mileage difference driven within a configurable time span*/
 public class DrivenCount {
 
-	private String train;
+	private String objectId;
 	private Integer mileage;
 	private String eventDate;
 	private int threshold;
 
-	public String getTrain() {
-		return train;
+	public String getObjectId() {
+		return objectId;
 	}
 
 	public String getEventDate() {
@@ -19,17 +19,17 @@ public class DrivenCount {
 	public Boolean wasMoved() {
 		return mileage > threshold;
 	}
-	
+
 	public Integer getMileage() {
 		return mileage;
 	}
 
 	public String getId() {
-		return this.train + " " + this.eventDate;
+		return this.objectId + " " + this.eventDate;
 	}
 
-	public DrivenCount(String train, String eventDate, Integer mileage, int threshold) {
-		this.train = train;
+	public DrivenCount(String objectId, String eventDate, Integer mileage, int threshold) {
+		this.objectId = objectId;
 		this.eventDate = eventDate;
 		this.mileage = mileage;
 		this.threshold = threshold;

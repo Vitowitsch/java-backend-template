@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
-
 @Repository("carDao")
 public class CarDao extends Dao {
 
@@ -17,54 +16,31 @@ public class CarDao extends Dao {
 	}
 
 	public String getCarNo(String train, String car) {
-		String carNo = "";
-		String carStr;
-		switch (car) {
-		case "EWA":
-			carStr = "0";
-			break;
-		case "EWB":
-			carStr = "1";
-			break;
-		case "MWC":
-			carStr = "2";
-			break;
-		case "MWD":
-			carStr = "3";
-			break;
-		default:
-			carStr = "NO_CAR_MAPPED";
-		}
-		String sql = "select carnumber from  cars where objectId='" + train + "' and car='" + carStr + "'";
-		SqlRowSet rows = jdbcTemplate.queryForRowSet(sql);
-		if (rows.next()) {
-			carNo = rows.getString("carnumber");
-		}
-		return carNo;
+		return "${REPLACE}";
 	}
 
 	public List<String> getTrains() {
-		String sql = "select distinct objectid from cars";
-		List<String> trains = new ArrayList<>();
+		String sql = "${REPLACE}";
+		List<String> objects = new ArrayList<>();
 		SqlRowSet rows = jdbcTemplate.queryForRowSet(sql);
 		while (rows.next()) {
-			trains.add(rows.getString("objectid"));
+			objects.add(rows.getString("objectid"));
 		}
-		return trains;
+		return objects;
 	}
 
-	public List<String> getDiagIds() {
-		String sql = "select distinct diagid from configurations";
-		List<String> diagIds = new ArrayList<>();
+	public List<String> getFieldIds() {
+		String sql = "${REPLACE}";
+		List<String> fieldIds = new ArrayList<>();
 		SqlRowSet rows = jdbcTemplate.queryForRowSet(sql);
 		while (rows.next()) {
-			diagIds.add(rows.getString("diagid"));
+			fieldIds.add(rows.getString("fieldId"));
 		}
-		return diagIds;
+		return fieldIds;
 	}
 
 	public List<String> getAlgos() {
-		String sql = "select distinct origin from bill_board";
+		String sql = "${REPLACE}";
 		List<String> algos = new ArrayList<>();
 		SqlRowSet rows = jdbcTemplate.queryForRowSet(sql);
 		while (rows.next()) {

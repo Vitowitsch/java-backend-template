@@ -4,11 +4,11 @@ public class Row {
 
 	private String origin;
 	private String objectid;
-	private String diagid;
-	private Integer lastResult_HS;
-	private String carnumber;
-	private String boogieWoogie;
-	private String axis;
+	private String fieldId;
+	private Integer state;
+	private String target;
+	private String rootPos;
+	private String position;
 	private String comp;
 	private String lastResultTime;
 	private String lastExecTime;
@@ -45,48 +45,44 @@ public class Row {
 		return lastExecTime;
 	}
 
-	public String getDiagid() {
-		return diagid;
+	public String getFieldId() {
+		return fieldId;
 	}
 
-	public void setDiagid(String diagid) {
-		this.diagid = diagid;
+	public void setFieldId(String f) {
+		this.fieldId = f;
 	}
 
-	public int getLastResult_HS() {
-		return lastResult_HS;
+	public int getState() {
+		return state;
 	}
 
-	public void setLastResult_HS(int lastResult_HS) {
-		this.lastResult_HS = lastResult_HS;
+	public void setState(int s) {
+		this.state = s;
 	}
 
-	public String getCarnumber() {
-		return carnumber;
+	public String getTarget() {
+		return target;
 	}
 
-	public void setCarnumber(String carnumber) {
-		this.carnumber = carnumber;
+	public void setTarget(String t) {
+		this.target = t;
 	}
 
-	public String getBoogieWoogie() {
-		return boogieWoogie;
+	public String getRootPos() {
+		return rootPos;
 	}
 
-	public void setBoogieWoogie(String boogieWoogie) {
-		this.boogieWoogie = boogieWoogie;
+	public String getPosition() {
+		return position;
 	}
 
-	public String getAxis() {
-		return axis;
+	public void setRootPos(String p) {
+		this.position = p;
 	}
 
-	public void setAxis(String axis) {
-		this.axis = axis;
-	}
-
-	public void setLastResult_HS(Integer lastResult_HS) {
-		this.lastResult_HS = lastResult_HS;
+	public void setState(Integer state) {
+		this.state = state;
 	}
 
 	public String getComp() {
@@ -97,15 +93,15 @@ public class Row {
 		this.comp = comp;
 	}
 
-	public Row(String origin, String objectid, String diagid, int lastResult_HS, String carnumber, String boogieWoogie,
-			String axis, String comp, String lastResultTime, String lastExecTime) {
+	public Row(String origin, String objectid, String fieldId, int state, String target, String rootPos, String pos,
+			String comp, String lastResultTime, String lastExecTime) {
 		this.origin = origin;
 		this.objectid = objectid;
-		this.diagid = diagid;
-		this.lastResult_HS = lastResult_HS;
-		this.carnumber = carnumber;
-		this.boogieWoogie = boogieWoogie;
-		this.axis = axis;
+		this.fieldId = fieldId;
+		this.state = state;
+		this.target = target;
+		this.rootPos = rootPos;
+		this.position = pos;
 		this.comp = comp;
 		this.lastResultTime = lastResultTime;
 		this.lastExecTime = lastExecTime;

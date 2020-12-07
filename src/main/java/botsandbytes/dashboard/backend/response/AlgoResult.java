@@ -1,34 +1,33 @@
 package botsandbytes.dashboard.backend.response;
 
 public class AlgoResult {
-	private String car;
-	private String hs;
+	private String target;
+	private String state;
 	private String asset;
-	private String okz;
+	private String position;
 
-
-	public String getOkz() {
-		return okz;
+	public String setPosition() {
+		return position;
 	}
 
-	public void setOkz(String okz) {
-		this.okz = okz;
+	public void setPosition(String okz) {
+		this.position = okz;
 	}
 
-	public String getCar() {
-		return car;
+	public String getTarget() {
+		return target;
 	}
 
-	public void setCar(String car) {
-		this.car = car;
+	public void setTarget(String car) {
+		this.target = car;
 	}
 
-	public String getHs() {
-		return hs;
+	public String getState() {
+		return state;
 	}
 
-	public void setHs(String hs) {
-		this.hs = hs;
+	public void setState(String hs) {
+		this.state = hs;
 	}
 
 	public String getAsset() {
@@ -39,10 +38,10 @@ public class AlgoResult {
 		this.asset = asset;
 	}
 
-	public AlgoResult(String car, String okz, String asset, String hs) {
-		this.okz = okz;
-		this.car = car;
-		this.hs = hs;
+	public AlgoResult(String target, String position, String asset, String state) {
+		this.position = position;
+		this.target = target;
+		this.state = state;
 		this.asset = asset;
 	}
 
